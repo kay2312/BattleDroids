@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"droids","l":"AttackDroid"},{"p":"battle","l":"Battle"},{"p":"file","l":"DataFile"},{"p":"design","l":"Design"},{"p":"droids","l":"Droid"},{"p":"droids","l":"LevelUpDroid"},{"p":"main","l":"Main"},{"p":"droids","l":"TankDroid"}];updateSearchResults();

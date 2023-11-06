@@ -1,0 +1,13 @@
+3
+2
+yourDroid_1
+3
+Bot_1
+1
+yourDroid_2
+2
+Bot_2
+3
+yourDroid_3
+2
+Bot_3

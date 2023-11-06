@@ -1,0 +1,115 @@
+package battle;
+
+import droids.*;
+import design.Design;
+import java.util.Random;
+
+/**
+ * Клас для формування битви між дроїдами
+ */
+public class Battle {
+    /**
+     * Метод для рандомного визначення противників та хто перший починає атаку
+     * @param yourDroids - всі дроїди гравця
+     * @param opponentDroids - всі дроїди противника
+     */
+    public void startRandomBattle(Droid[] yourDroids, Droid[] opponentDroids) {
+        Random random = new Random();
+        System.out.println();
+
+        boolean firstAttacks = random.nextBoolean();
+
+        int numbDeathYourDroids = 0, numbDeathOpponentDroids = 0, numb = 0;
+
+        System.out.println(Design.RED + "\n---------------Битва розпочався!---------------" + Design.RESET);
+
+        while(true) {
+
+            int randomYourDroid = random.nextInt(yourDroids.length);
+            int randomOpponentDroid = random.nextInt(opponentDroids.length);
+
+            if (yourDroids[randomYourDroid].isAlive() && opponentDroids[randomOpponentDroid].isAlive()) {
+                numb++;
+                System.out.println(Design.PURPLE + "\n----------------Бій " + numb + "\n" + Design.RESET);
+                System.out.println(Design.BLUE + "Учасники:" + Design.RESET);
+                System.out.println(Design.TYPE + yourDroids[randomYourDroid]);
+                System.out.println(Design.TYPE + opponentDroids[randomOpponentDroid]);
+
+                // хто перший починає атаку
+                if (firstAttacks)
+                    battle(yourDroids[randomYourDroid], opponentDroids[randomOpponentDroid]);
+                else
+                    battle(opponentDroids[randomOpponentDroid], yourDroids[randomYourDroid]);
+
+                // перевірка, хто вижив
+                if (!yourDroids[randomYourDroid].isAlive())
+                    numbDeathYourDroids++;
+                else
+                    numbDeathOpponentDroids++;
+
+
+                System.out.println(Design.YELLOW + "\n--------------Рахунок "
+                        + numbDeathOpponentDroids + ":" + numbDeathYourDroids + Design.RESET);
+
+            }
+
+            if(numbDeathYourDroids == yourDroids.length || numbDeathOpponentDroids == opponentDroids.length)
+                break;
+
+        }
+
+    }
+
+    /**
+     * Метод для проведення бою між двома дроїдами
+     * @param firstDroid - перший дроїд
+     * @param secondDroid - противник першого дроїда
+     */
+    private static void battle(Droid firstDroid, Droid secondDroid) {
+
+        int round = 0;
+
+        while (firstDroid.isAlive() && secondDroid.isAlive()) {
+            // Раунд бою
+            round++;
+            System.out.println(Design.GREEN + "------------Раунд " + round + "------------\n" + Design.RESET);
+            attackDroid(firstDroid, secondDroid);
+
+
+            // Перевірка, чи противник ще живий
+            if (!secondDroid.isAlive()) {
+                printVictory (firstDroid);
+                break;
+            }
+
+            attackDroid(secondDroid, firstDroid);
+
+            if (!firstDroid.isAlive()) {
+                printVictory (secondDroid);
+                break;
+            }
+        }
+    }
+
+    /**
+     * Методи для атаки одного дроїда по іншому
+     * @param firstDroid - дроїд, який атакує
+     * @param secondDroid - дроїд, якого атакують
+     */
+    private static void attackDroid(Droid firstDroid, Droid secondDroid){
+        firstDroid.attack();
+        secondDroid.setHealth(secondDroid.getHealth()-firstDroid.getDamage());
+        System.out.println(Design.HEALTH + "Дроїд " + secondDroid.getName() + " має " + secondDroid.getHealth()
+                + " здоров'я.\n");
+    }
+
+    /**
+     * Метод для виведення переможця дроїда
+     * @param droid - дроїд-переможець
+     */
+    private static void printVictory (Droid droid) {
+        System.out.println(Design.VICTORY + "Дроїд - " + droid.getName() + " переміг!");
+        System.out.println(Design.TYPE + droid);
+    }
+}
+

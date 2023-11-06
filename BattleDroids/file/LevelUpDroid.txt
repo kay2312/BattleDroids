@@ -1,0 +1,47 @@
+package droids;
+
+import design.Design;
+import java.util.Random;
+
+/**
+ * Похідний клас, певний тип дроїда - LevelUpDroid
+ */
+public class LevelUpDroid extends Droid {
+    private final int bonusHealth;
+    private final int bonusDamage;
+
+    /**
+     * Конструктор
+     * @param bonusHealth - бонусне здоров'я
+     * @param bonusDemage - бонусний урон
+     */
+    public LevelUpDroid(String name, int health, int damage, int bonusHealth, int bonusDemage) {
+        super(name, health, damage);
+        this.bonusHealth = bonusHealth;
+        this.bonusDamage = bonusDemage;
+    }
+
+    public String toString() {
+        return "Тип дроїда = ShieldDroid" + super.toString() + ", Бонусне здоров'я = +10 та Бонусний урон = +20";
+    }
+
+    /**
+     * Метод для атаки та використання бонуса
+     */
+    public void attack() {
+        useBonus();
+        super.attack();
+    }
+
+    /**
+     * Метод для використання бонусу з певним шансом
+     */
+    public void useBonus() {
+        Random random = new Random();
+        if (random.nextBoolean()) {
+            this.health += bonusHealth;
+            this.damage += bonusDamage;
+            System.out.print(Design.BONUS + "Використаний бонусне здоров'я = + 10 та Бонусний урон = + 20\n");
+        }
+    }
+}
